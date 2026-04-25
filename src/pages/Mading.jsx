@@ -32,8 +32,8 @@ function Card({ type, title, text, sender, vote }) {
             <p className="text-light-100 line-clamp-3">{text}</p>
             <div className="flex justify-between items-center mt-auto">
                 <div className="font-bold">
-                    <p className="capitalize text-light-100">{type}</p>
-                    <p>{sender}</p>
+                    <p className="capitalize">{type}</p>
+                    <p>- {sender}</p>
                 </div>
                 <div className="self-end flex items-center gap-2 hover:brightness-200">
                     <FaRegArrowAltCircleUp />
