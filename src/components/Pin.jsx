@@ -9,10 +9,10 @@ const Pin = (props) => (
         viewBox="0 0 26 24"
     >
         <g filter="url(#filter0_d_9_193)">
-            <path fill="#C5C5C5" d="m4 18 9.5-14.5 7 8z"></path>
+            <path fill="#b5b5b5" d="m4 18 9.5-14.5 7 8z"></path>
         </g>
         <g filter="url(#filter1_d_9_193)">
-            <circle cx="16" cy="7.5" r="7.5" fill="#D9D9D9"></circle>
+            <circle cx="16" cy="7.5" r="7.5" fill="#cccccc"></circle>
         </g>
         <defs>
             <filter
