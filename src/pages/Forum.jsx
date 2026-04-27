@@ -1,5 +1,10 @@
 import { FaRegArrowAltCircleUp } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
+import { useState } from "react";
+import { useGSAP } from "@gsap/react";
+import { useMemo } from "react";
+import allCardData from '../data/data.json'
+import gsap from "gsap";
 
 function DiskusiCommentCard({ comment }) {
     return (
@@ -13,7 +18,7 @@ function DiskusiCommentCard({ comment }) {
 
 function DiskusiDetailCard({ card }) {
     return (
-        <div className="w-full bg-[#5C7A6B] flex flex-col gap-2 text-light p-4 rounded-lg">
+        <div className="detail-card-container w-full bg-[#5C7A6B] flex flex-col gap-2 text-light p-4 rounded-lg">
             <h2 className="font-bold text-lg md:text-2xl truncate">{card.title}</h2>
             <p className="text-light-100">{card.text}</p>
             <div className="pt-2 pb-2 grid grid-cols-2 gap-4">
@@ -24,7 +29,7 @@ function DiskusiDetailCard({ card }) {
                 <IoMdSend />
             </div>
             <div className="flex items-center justify-between">
-                <p className="font-bold">{card.sender} / Diskusi / {card.time}</p>
+                <p className="font-bold capitalize">{card.sender} / Diskusi / {card.time}</p>
                 <div className="flex items-center gap-1"><FaRegArrowAltCircleUp />{card.vote}</div>
             </div>
         </div>
@@ -41,7 +46,7 @@ function MusyawarahDetailCard({ card }) {
     const persentaseKehadiran = `${(pesertaHadir / pesertaTotal) * 100}%`;
 
     return (
-        <div className="w-full bg-[#6B3F72] flex flex-col gap-2 text-light p-4 rounded-lg">
+        <div className="detail-card-container w-full bg-[#6B3F72] flex flex-col gap-2 text-light p-4 rounded-lg">
             <h2 className="font-bold text-lg md:text-2xl truncate">{card.title}</h2>
             <p className="text-light-100">{card.text}</p>
             <div className="pt-2 pb-2 grid grid-cols-2 gap-4">
@@ -64,74 +69,109 @@ function MusyawarahDetailCard({ card }) {
                     ))}
                 </div>
             </div>
-            <div className="flex items-center h-8 bg-light text-dark rounded-md">
-                <div style={{ width: persentaseKehadiran }} className="h-full bg-[#6B3F72] rounded-l-md rounded-tr-2xl p-2 flex items-center brightness-150 text-light"><p>{pesertaHadir} / {pesertaTotal} Hadir</p></div>
+            <div className="flex items-center h-8 bg-[#6B3F72] brightness-110 text-light-100 rounded-md">
+                <div style={{ width: persentaseKehadiran }} className="h-full bg-[#6B3F72] rounded-l-md rounded-tr-2xl p-2 flex items-center brightness-75"></div>
+                <p className="pl-2 absolute">{pesertaHadir} / {pesertaTotal} Hadir</p>
             </div>
             <div className="flex items-center justify-between">
-                <p className="font-bold">{card.sender} / Musyawarah / {card.time}</p>
+                <p className="font-bold capitalize">{card.sender} / Musyawarah / {card.time}</p>
+                <div className="flex items-center gap-1"><FaRegArrowAltCircleUp />{card.vote}</div>
+            </div>
+        </div>
+    )
+};
+
+function DemosDetailCard({ card }) {
+    let totalVote = 0;
+    card.options.forEach((option) => totalVote += option.currentVotes);
+
+    return (
+        <div className="detail-card-container w-full bg-[#D4A843] flex flex-col gap-2 text-light p-4 rounded-lg">
+            <h2 className="font-bold text-lg md:text-2xl truncate">{card.title}</h2>
+            <p className="text-light-100">{card.text}</p>
+            <div className="flex flex-col gap-2">
+                {card.options.map((option) => (
+                    <div className="flex items-center h-8 bg-[#D4A843] brightness-110 text-light-100 rounded-md">
+                        <div style={{ width: `${(option.currentVotes / totalVote) * 100}%` }} className="h-full bg-[#D4A843] rounded-l-md rounded-tr-2xl p-2 flex items-center brightness-75"></div>
+                        <p className="pl-2 absolute">{option.label}</p>
+                    </div>
+                ))}
+            </div>
+            <div className="flex items-center justify-between">
+                <p className="font-bold capitalize">{card.sender} / Demos / {card.time}</p>
+                <div className="flex items-center gap-1"><FaRegArrowAltCircleUp />{card.vote}</div>
+            </div>
+
+        </div>
+    )
+}
+
+function DetailCard({ card }) {
+    const detailCards = {
+        diskusi: <DiskusiDetailCard card={card} />,
+        musyawarah: <MusyawarahDetailCard card={card} />,
+        demos: <DemosDetailCard card={card} />,
+    }
+
+    return detailCards[card.type];
+}
+
+function Card({ card, detailCard, setDetailCard }) {
+    const bgColors = { diskusi: '#5C7A6B', laporan: '#C0392B', musyawarah: '#6B3F72', demos: '#D4A843' };
+
+    return (
+        <div style={{ backgroundColor: bgColors[card.type] }} className="forum-card-container w-full flex flex-col gap-2 text-light p-4 rounded-lg cursor-pointer" onClick={() => { if (card.type == 'laporan' || card == detailCard) return; setDetailCardFunc(setDetailCard, card) }}>
+            <h2 className="font-bold text-lg md:text-2xl truncate">{card.title}</h2>
+            <p className="text-light-100">{card.text}</p>
+            <div className="flex items-center justify-between">
+                <p className="font-bold capitalize">{card.sender} / {card.type} / {card.time}</p>
                 <div className="flex items-center gap-1"><FaRegArrowAltCircleUp />{card.vote}</div>
             </div>
         </div>
     )
 }
 
-const forumData = [
-    {
-        id: 1,
-        type: 'diskusi',
-        title: 'Kebersihan Lingkungan Sekolah',
-        text: 'Bagaimana pendapat kalian mengenai jadwal piket baru yang akan diterapkan mulai minggu depan?',
-        sender: 'Andi Perkasa',
-        class: 'XII-IPA-1',
-        vote: 150,
-        time: '12:40',
-        replies: [
-            {
-                id: 101,
-                sender: 'Budi Utomo',
-                class: 'XII-IPS-2',
-                text: 'Saya setuju, asalkan pembagian waktunya adil untuk yang ekskul.',
-                vote: 12
-            },
-            {
-                id: 102,
-                sender: 'Siti Aminah',
-                class: 'XI-IPA-3',
-                text: 'Mungkin bisa ditambah poin untuk yang paling rajin?',
-                vote: 45
-            }
-        ]
-    }
-];
+function setDetailCardFunc(setUseState, value) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    gsap.to('.detail-card-container', {
+        opacity: 0,
+        yPercent: 50,
+        delay: 0.3,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+            // 2. Setelah animasi out selesai, baru ganti state
+            setUseState(value);
 
-const musyawarahData = [
-    {
-        id: 2,
-        type: 'musyawarah',
-        title: 'Rapat Evaluasi Ekstrakurikuler',
-        text: 'Pembahasan mengenai efektivitas kegiatan setelah jam sekolah.',
-        sender: 'OSIS',
-        vote: 100,
-        time: '14:00',
-        agenda: [
-            'Pembukaan oleh kepala sekolah.',
-            'Membahas kepentingan kegiatan ekstrakurikuler.',
-            'Sesi voting pendapat.',
-            'Pembulatan keputusan.'
-        ],
-        peserta: [
-            { name: 'Andi', role: 'Ketua', keterangan: true },
-            { name: 'Budi', role: 'Sekretaris', keterangan: true },
-            { name: 'Siti', role: 'Bendahara', keterangan: false }
-        ],
-    }
-]
+            // 3. Animasi In akan dipicu oleh useGSAP yang memantau [detailCard]
+        }
+    });
+}
 
 export default function Forum() {
+    const [allData, setAllData] = useState(allCardData);
+    const sortedData = useMemo(() => {
+        return [...allData].sort((a, b) => b.vote - a.vote);
+    }, [allData]);
+
+    const [detailCard, setDetailCard] = useState(sortedData[0]);
+    useGSAP(() => {
+        const cards = gsap.utils.toArray('.forum-card-container');
+        cards.forEach((card) => {
+            gsap.from(card, { opacity: 0, xPercent: -50, stagger: 0.1, scrollTrigger: { trigger: card, start: 'top 95%', toggleActions: 'play none none none' } });
+        })
+    }, [allData])
+    useGSAP(() => {
+        gsap.from('.detail-card-container', { opacity: 0, yPercent: -50, duration: 0.5, ease: 'back.out' })
+    }, [detailCard]);
+
     return (
-        <div className="w-svw h-svh bg-light pt-20 pl-4 pr-4 flex flex-col gap-4">
+        <div className="w-full min-h-svh bg-light pt-20 pl-4 pr-4 flex flex-col gap-4">
             <div>
-                <MusyawarahDetailCard card={musyawarahData[0]} />
+                {<DetailCard key={detailCard.id} card={detailCard} />}
+            </div>
+            <div className="flex flex-col gap-4">
+                {sortedData.map((card) => (<Card card={card} detailCard={detailCard} setDetailCard={setDetailCard} />))}
             </div>
         </div>
     )

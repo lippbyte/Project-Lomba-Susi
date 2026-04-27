@@ -5,15 +5,17 @@ import gsap from 'gsap';
 import { useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { Draggable } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
-  const madingContainer = document.querySelector('#mading-container');
-  const overflow = madingContainer ? 'hidden' : 'visible';
+  const [overflow, setOverflow] = useState('visible');
 
-  gsap.registerPlugin(Draggable);
+  gsap.registerPlugin(Draggable, ScrollTrigger);
   useGSAP(() => {
-    if (madingContainer != null) {
+    const madingContainer = document.querySelector('#mading-container');
+    if (madingContainer) {
+      setOverflow('hidden');
       gsap.set('#mading-container', { x: -(madingContainer.offsetWidth / 2 - window.innerWidth / 2), y: -(madingContainer.offsetHeight / 2 - window.innerHeight / 2) });
       Draggable.create(madingContainer, { bounds: 'body' });
     }

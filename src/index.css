@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+html {
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+}
+
 @theme {
   --color-dark: #2c2c2a;
   --color-dark-100: #6b6b68;
