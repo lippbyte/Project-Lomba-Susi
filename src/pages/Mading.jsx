@@ -2,6 +2,8 @@ import { FaRegArrowAltCircleUp } from "react-icons/fa";
 import { useMemo } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { FaUser } from "react-icons/fa";
+import { useState } from "react";
+import allCardData from '../data/data.json';
 import Pin from '../components/Pin';
 
 function Card({ card: { type, title, text, sender, vote } }) {
@@ -32,7 +34,7 @@ function Card({ card: { type, title, text, sender, vote } }) {
             <p className="text-light-100 line-clamp-3">{text}</p>
             <div className="flex justify-between items-center mt-auto">
                 <div className="font-bold">
-                    <p className="flex items-center gap-2 capitalize"><FaUser />{sender} / {type}</p>
+                    <p className="flex items-center gap-2 capitalize"><FaUser />{sender} · {type}</p>
                 </div>
                 <div className="flex items-center gap-2 hover:brightness-200">
                     <FaRegArrowAltCircleUp />
@@ -46,21 +48,10 @@ function Card({ card: { type, title, text, sender, vote } }) {
     );
 };
 
-const cards = [
-    { id: 1, type: 'diskusi', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 10 },
-    { id: 2, type: 'laporan', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 1 },
-    { id: 3, type: 'laporan', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 15 },
-    { id: 4, type: 'diskusi', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 30 },
-    { id: 5, type: 'demos', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 50 },
-    { id: 6, type: 'musyawarah', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 7 },
-    { id: 7, type: 'musyawarah', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 4 },
-    { id: 8, type: 'musyawarah', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 8 },
-    { id: 9, type: 'demos', title: 'Title', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt', sender: 'Sender', vote: 18 },
-];
-
 export default function Mading() {
+    const [allData, setAllData] = useState(allCardData);
     const sortedCards = useMemo(() => {
-        const descCards = [...cards].sort((a, b) => b.vote - a.vote);
+        const descCards = [...allData].sort((a, b) => b.vote - a.vote);
 
         const result = [];
         descCards.forEach((card, index) => {
@@ -71,11 +62,11 @@ export default function Mading() {
             }
         });
         return result;
-    }, []);
+    }, [allData]);
 
     return (
         <div id="mading-container" style={{ backgroundImage: `linear-gradient(to right, #cccccc 1px, transparent 1px), linear-gradient(to bottom, #cccccc 1px, transparent 1px)`, backgroundSize: "40px 40px" }} className="page-container w-[200svw] h-[200svh] lg:w-[125svw] lg:h-[275svh] bg-light flex flex-col justify-center items-center">
-            <div className="flex flex-wrap justify-center items-start gap-4 lg:gap-8">
+            <div className="flex flex-wrap justify-center items-start gap-4 lg:gap-8 text-xs md:text-lg">
                 {sortedCards.map((card) => (<Card key={card.id} card={card} />))}
             </div>
         </div>
