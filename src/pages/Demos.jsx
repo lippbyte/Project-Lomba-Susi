@@ -9,7 +9,7 @@ export default function Demos({ card, setPage }) {
     card.options.forEach((option) => voteTotal += option.currentVotes);
 
     return (
-        <div className="bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
+        <div className="page-container bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
             <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPage('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Demos</span></div>
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
                 <div className="flex flex-col gap-4 flex-1">

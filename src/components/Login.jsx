@@ -14,7 +14,7 @@ export default function Login() {
     }, []);
 
     return (
-        <div className="login-container md:w-1/2 md:mt-50 md:self-center p-4 bg-light-100 rounded-md shadow-2xl flex flex-col gap-4">
+        <div className="login-container md:w-1/2 md:fixed md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:-translate-y-1/2 p-4 bg-light-100 rounded-md shadow-sm flex flex-col gap-4 border border-accent-100">
             <h2 className="text-2xl md:text-4xl text-center font-bold">Login</h2>
             <form id="loginForm" className="flex flex-col gap-4">
                 <div className="flex justify-between items-center bg-light p-2 rounded-sm shadow-sm">

@@ -29,7 +29,7 @@ function Card({ card: { type, title, text, sender, vote } }) {
     }, [isLarge, isMedium, vote]);
 
     return (
-        <div style={{ backgroundColor: bgColor, width: `${width}px`, rotate: `${rotation}deg`, alignSelf: randomAlign, ...randomMargin }} className='card-container aspect-square lg:aspect-video flex flex-col bg-primary rounded-xl shadow-2xl p-3 text-light cursor-pointer gap-1'>
+        <div style={{ backgroundColor: bgColor, width: `${width}px`, rotate: `${rotation}deg`, alignSelf: randomAlign, ...randomMargin }} className='card-container aspect-square lg:aspect-video flex flex-col bg-primary rounded-xl shadow-2xl p-3 text-light gap-1'>
             <h2 className="font-bold text-lg md:text-2xl truncate">{title}</h2>
             <p className="text-light-100 line-clamp-3">{text}</p>
             <div className="flex justify-between items-center mt-auto">
@@ -67,7 +67,7 @@ export default function Mading() {
     return (
         <div id="mading-container" style={{ backgroundImage: `linear-gradient(to right, #cccccc 1px, transparent 1px), linear-gradient(to bottom, #cccccc 1px, transparent 1px)`, backgroundSize: "40px 40px" }} className="page-container w-[200svw] h-[200svh] lg:w-[125svw] lg:h-[275svh] bg-light flex flex-col justify-center items-center">
             <div className="flex flex-wrap justify-center items-start gap-4 lg:gap-8 text-xs md:text-lg">
-                {sortedCards.map((card) => (<Card key={card.id} card={card} />))}
+                {sortedCards.slice(0, 10).map((card) => (<Card key={card.id} card={card} />))}
             </div>
         </div>
     );

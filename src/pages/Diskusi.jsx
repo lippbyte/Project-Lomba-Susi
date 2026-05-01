@@ -17,7 +17,7 @@ export default function Diskusi({ card, setPage }) {
     const [repliesCount, setRepliesCount] = useState(card.replies.length)
 
     return (
-        <div className="bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
+        <div className="page-container bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
             <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPage('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Diskusi</span></div>
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
                 <div className="flex flex-col gap-4 flex-1">
@@ -34,7 +34,7 @@ export default function Diskusi({ card, setPage }) {
                         </div>
                         <p className="pl-4 pr-4 text-sm md:text-xl flex gap-2 items-center bg-[#5C7A6B] text-light rounded-lg font-bold"><FaRegArrowAltCircleUp /> Suarakan</p>
                     </div>
-                    <div className="fixed lg:static bottom-4 z-100 p-2 flex bg-dark-100/25 items-center  text-sm rounded-xl border border-accent-100 left-4 right-4 lg:left-12 lg:right-12 backdrop-blur-sm">
+                    <div className="fixed lg:static bottom-4 z-100 p-2 flex bg-dark-100/25 items-center text-sm rounded-xl border border-accent-100 left-4 right-4 lg:left-12 lg:right-12 backdrop-blur-sm">
                         <input type="text" className="flex-1 outline-none" />
                         <IoMdSend />
                     </div>
