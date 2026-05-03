@@ -1,5 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body, #root { height: 100%; }
-body { font-family: 'Inter', sans-serif; background: #F5F1E8; color: #1F2937; }
-body.dark-theme { background: #121212; color: #F3F4F6; }
+@import "tailwindcss";
+
+html {
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+}
+
+@theme {
+  --color-dark: #2c2c2a;
+  --color-dark-100: #6b6b68;
+  --color-light: #eeeae0;
+  --color-light-100: #ddd8cb;
+  --font-sans: "Plus Jakarta Sans";
+}
