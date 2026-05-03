@@ -3,10 +3,10 @@ import { FaRegArrowAltCircleUp } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
 import { useState } from "react";
 
-export default function Laporan({ card, setPage }) {
+export default function Laporan({ card, setPageFunc }) {
     return (
         <div className="page-container bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
-            <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPage('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Laporan</span></div>
+            <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPageFunc('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Laporan</span></div>
             <div className="flex flex-col gap-4">
                 <div className="bg-[#C0392B] p-4 rounded-lg flex flex-col gap-2 text-light">
                     <div className="bg-neutral-100 pt-1 pb-1 pl-2 pr-2 brightness-95 rounded-lg capitalize w-fit text-accent font-bold">{card.category}</div>

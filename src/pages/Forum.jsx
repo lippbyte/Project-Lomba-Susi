@@ -7,7 +7,7 @@ import { memo } from "react";
 import allCardData from '../data/data.json'
 import gsap from "gsap";
 
-const Card = memo(({ card, topCard, setPage, setCardData }) => {
+const Card = memo(({ card, topCard, setPageFunc, setCardData }) => {
     const bgColors = {
         diskusi: '#5c7a6b',
         musyawarah: '#6b3f72',
@@ -16,7 +16,7 @@ const Card = memo(({ card, topCard, setPage, setCardData }) => {
     };
 
     return (
-        <div className="forum-card-container" onClick={() => { setCardData(card); setPage(card.type) }}>
+        <div className="forum-card-container" onClick={() => { setCardData(card); setPageFunc(card.type) }}>
             <div style={{ backgroundColor: topCard ? bgColors[card.type] : '' }} className="w-full h-full flex flex-col gap-2 bg-neutral-100 p-4 rounded-lg cursor-pointer shadow-lg border-2 border-accent-100">
                 <h2 style={{ color: topCard ? '#eeeae0' : '' }} className="font-bold text-dark text-sm md:text-xl truncate">{card.title}</h2>
                 <p style={{ color: topCard ? '#ddd8cb' : '' }} className="text-dark-100">{card.text}</p>
@@ -29,7 +29,7 @@ const Card = memo(({ card, topCard, setPage, setCardData }) => {
     )
 })
 
-export default function Forum({ setPage, setCardData }) {
+export default function Forum({ setPageFunc, setCardData }) {
     const [allData, setAllData] = useState(allCardData);
     const [categoryActive, setCategoryActive] = useState('semua');
     const filteredAndSortedData = useMemo(() => {
@@ -59,7 +59,7 @@ export default function Forum({ setPage, setCardData }) {
                 </div>
             </div>
             <div className="card-scroll-container flex flex-col gap-4 md:grid md:grid-cols-2">
-                {filteredAndSortedData.map((card, index) => (<Card card={card} key={card.id} topCard={index < 4} setPage={setPage} setCardData={setCardData} />
+                {filteredAndSortedData.map((card, index) => (<Card card={card} key={card.id} topCard={index < 4} setPageFunc={setPageFunc} setCardData={setCardData} />
                 ))}
             </div>
         </div>

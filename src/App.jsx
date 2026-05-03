@@ -21,18 +21,22 @@ function App() {
   const [overflow, setOverflow] = useState('hidden');
   const [page, setPage] = useState('mading');
   const [cardData, setCardData] = useState(null);
+  const setPageFunc = (value) => {
+    setPage(value);
+  };
   const pageMapping = {
     mading: <Mading />,
-    forum: <Forum setPage={setPage} setCardData={setCardData} />,
-    diskusi: <Diskusi card={cardData} setPage={setPage} />,
-    musyawarah: <Musyawarah card={cardData} setPage={setPage} />,
-    demos: <Demos card={cardData} setPage={setPage} />,
-    laporan: <Laporan card={cardData} setPage={setPage} />,
+    forum: <Forum setPageFunc={setPageFunc} setCardData={setCardData} />,
+    diskusi: <Diskusi card={cardData} setPageFunc={setPageFunc} />,
+    musyawarah: <Musyawarah card={cardData} setPageFunc={setPageFunc} />,
+    demos: <Demos card={cardData} setPageFunc={setPageFunc} />,
+    laporan: <Laporan card={cardData} setPageFunc={setPageFunc} />,
     form: <Form />
-  }
+  };
 
   useGSAP(() => {
     const madingContainer = document.querySelector('#mading-container');
+    gsap.from('.page-container', { opacity: 0 });
     if (madingContainer) {
       setOverflow('hidden');
       gsap.set('#mading-container', { x: -(madingContainer.offsetWidth / 2 - window.innerWidth / 2), y: -(madingContainer.offsetHeight / 2 - window.innerHeight / 2) });
@@ -49,7 +53,7 @@ function App() {
 
   return (
     <div style={{ overflow: overflow }} className="w-full h-svh bg-light">
-      <Navbar showLogin={showLogin} setShowLogin={setShowLogin} setPage={setPage} page={page} />
+      <Navbar showLogin={showLogin} setShowLogin={setShowLogin} setPageFunc={setPageFunc} page={page} />
       {pageMapping[page]}
       {/* <Form /> */}
     </div>

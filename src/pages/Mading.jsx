@@ -52,7 +52,6 @@ export default function Mading() {
     const [allData, setAllData] = useState(allCardData);
     const sortedCards = useMemo(() => {
         const descCards = [...allData].sort((a, b) => b.vote - a.vote);
-
         const result = [];
         descCards.forEach((card, index) => {
             if (index % 2 === 0) {

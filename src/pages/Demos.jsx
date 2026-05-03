@@ -3,14 +3,14 @@ import { FaRegArrowAltCircleUp } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
 import { useState } from "react";
 
-export default function Demos({ card, setPage }) {
+export default function Demos({ card, setPageFunc }) {
     let voteTotal = 0;
     const maxVotes = Math.max(...card.options.map(o => o.currentVotes));
     card.options.forEach((option) => voteTotal += option.currentVotes);
 
     return (
         <div className="page-container bg-light pl-4 pr-4 pb-18 pt-20 md:pt-24 lg:pl-12 lg:pr-12 lg:pt-26 text-[10px] md:text-sm">
-            <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPage('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Demos</span></div>
+            <div className="flex gap-2 items-center font-bold pb-4"><div className="bg-light-100 rounded-full p-2 cursor-pointer" onClick={() => setPageFunc('forum')}><FaAngleLeft /></div><span className="text-sm">Detail Demos</span></div>
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
                 <div className="flex flex-col gap-4 flex-1">
                     <div className="bg-[#d4a843] p-4 rounded-lg flex flex-col gap-2 text-light">
@@ -28,7 +28,7 @@ export default function Demos({ card, setPage }) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 flex-1">
-                    <p className="text-sm font-bold text-dark-100">Peserta</p>
+                    <p className="text-sm font-bold text-dark-100">Opsi</p>
                     {card.options.map((option) => (
                         <div className="bg-neutral-50 p-4 border border-accent-100 rounded-lg flex flex-col shadow-sm gap-2">
                             <div className="w-full flex justify-between items-center">

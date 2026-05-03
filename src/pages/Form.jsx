@@ -11,6 +11,8 @@ export default function Form() {
     const [text, setText] = useState('');
     const [agenda, setAgenda] = useState(['']);
     const [peserta, setPeserta] = useState([{ name: '', role: '', keterangan: false }]);
+    const [option, setOption] = useState(['']);
+    const [anonim, setAnonim] = useState(true);
     const bgColorMapping = {
         diskusi: '#5C7A6B',
         musyawarah: '#6B3F72',
@@ -59,6 +61,21 @@ export default function Form() {
         newPeserta[index].keterangan = !newPeserta[index].keterangan;
         setPeserta(newPeserta);
         console.log(peserta);
+    }
+    const addOption = () => {
+        let newOption = [...option, ''];
+        setOption(newOption);
+    }
+    const subOption = () => {
+        if (option.length == 1) return;
+        let newOption = [...option];
+        newOption.pop();
+        setOption(newOption);
+    }
+    const setOptionItem = (index, value) => {
+        let newOption = [...option];
+        newOption[index] = value;
+        setOption(newOption);
     }
 
     return (
@@ -110,6 +127,23 @@ export default function Form() {
                                         <p style={{ backgroundColor: peserta.keterangan ? '#eaf3de' : '#fcebeb', color: peserta.keterangan ? '#3b6d11' : '#791f1f' }} className="text-sm pl-2 pr-2 h-full flex items-center justify-center rounded-xl border border-accent-100" onClick={(event) => { setPesertaKetItem(index, event.target.value) }}>{peserta.keterangan ? 'Hadir' : 'Tidak Hadir'}</p>
                                     </div>
                                 ))}
+                            </div>
+                        </div>
+                    )}
+                    {type == 'demos' && (
+                        <div className="flex flex-col gap-2 p-4 bg-neutral-50 border border-accent-100 rounded-lg shadow-sm text-light">
+                            <p className="text-dark-100 text-sm font-bold flex items-center justify-between">Opsi<span className="flex gap-2"><IoIosAddCircleOutline onClick={() => { addOption() }} /><IoIosRemoveCircleOutline onClick={() => { subOption() }} /></span></p>
+                            {option.map((option, index) => (
+                                <input type="text" key={index} placeholder={`Opsi ke-${index + 1}`} style={{ backgroundColor: bgColorMapping[type] }} className="rounded-lg text-sm p-2 outline-none" onChange={(event) => { setOptionItem(index, event.target.value) }} />
+                            ))}
+                        </div>
+                    )}
+                    {type == 'laporan' && (
+                        <div className="flex flex-col gap-2 p-4 bg-neutral-50 border border-accent-100 rounded-lg shadow-sm text-light">
+                            <p className="text-dark-100 text-sm font-bold flex items-center justify-between">Anonimitas</p>
+                            <div className="grid grid-cols-2 gap-4">
+                                <p className="text-dark-100 capitalize">Apakah anda ingin mengunggahnya sebagai Anonim?</p>
+                                <p style={{ backgroundColor: anonim ? '#eaf3de' : '#fcebeb', color: anonim ? '#3b6d11' : '#791f1f' }} className="text-sm pl-2 pr-2 h-full flex items-center justify-center rounded-xl border border-accent-100" onClick={(event) => { setAnonim(!anonim) }}>{anonim ? 'Anonim' : 'Tidak Anonim'}</p>
                             </div>
                         </div>
                     )}
